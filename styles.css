@@ -17,7 +17,6 @@ nav {
 nav a {
     color: white;
     text-align: center;
-    text-decoration: none;
     flex-grow: 1;
     padding: 15px;
 }
@@ -30,6 +29,7 @@ nav a:hover {
 nav a.active {
     background-color: darkgreen;
     color: white;
+    text-decoration: underline;
 }
 
 #progress-bar {

@@ -4,6 +4,7 @@ body {
     width: 100%;
     min-width: 400px;
     min-height: 300px;
+    font-size: 18px;
 }
 
 nav {
@@ -29,4 +30,25 @@ nav a:hover {
 nav a.active {
     background-color: darkgreen;
     color: white;
+}
+
+#progress-bar {
+    height: 3px;
+    background-color: red;
+    width: 50%;
+}
+
+#container {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 10%;
+    width: 100%;
+}
+
+#container p {
+    min-height: 150px;
+    padding: 15px;
+    margin: 15%;
+    border-style: dotted;
 }

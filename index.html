@@ -16,8 +16,8 @@
                     items = window.location.hash.substring(1).split("|");
                     if (items.length < 3) {
                         alert("Really ?  You need at least 3 params");
+                        items = ['Opt1', 'Opt2', 'Opt3'];
                     }
-                    items = ['Opt1', 'Opt2', 'Opt3'];
                 }
                 YoutubeBar.init(items);
                 YoutubeBar.content.init($('#values'));

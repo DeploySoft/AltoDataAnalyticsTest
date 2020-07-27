@@ -34,7 +34,7 @@ which has the following functionality.
  +-------------------------------+
 
 * the 4 'option placeholders' for options on top of a page behave as follows:
-** 'All' option is a virtual option, is always there and is selected by default
+** 'All' option is a virtual option, is always there and is selected by default --> Ok
 ** 'All' option is exclusive to other options but other options are not
    exclusive to themselves and behave like 'toggle options' (if one is selected
    it can be unselected and vice versa)

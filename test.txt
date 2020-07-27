@@ -12,7 +12,7 @@
 ## Description:
 
 Please write a single HTML page (single html file with js+css embedded inside)
-which has the following functionality.
+which has the following functionality. -> OK
 
 * page always adjusts to a size of a browser window (fully filling it up -
   width and height - with minimal width fixed to 400px and minimal height

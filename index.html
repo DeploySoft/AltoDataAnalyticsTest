@@ -4,8 +4,162 @@
     <meta charset="UTF-8">
     <title>Youtube Progress Bar</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-    <script src="script.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <script>
+        var items = ['Opt1', 'Opt2', 'Opt3'];
+        var itemsSelected = [];
+        var itemsActive = [];
+        var currentBars = [];
+        var bar, content;
+
+        $(document).ready(function () {
+                if (window.location.hash) {
+                    items = window.location.hash.substring(1).split("|");
+                    if (items.length < 3) {
+                        alert("Really ?  You need at least 3 params");
+                    }
+                    items = ['Opt1', 'Opt2', 'Opt3'];
+                }
+                YoutubeBar.init(items);
+                YoutubeBar.content.init($('#values'));
+                YoutubeBar.progressBar.init($('#progress-bar'));
+            }
+        );
+
+        YoutubeBar = {
+            init: function (items) {
+                $.each(items, function (k, v) {
+                    var item = $('<a id="' + v + '">' + v + '</a>');
+                    $('.items').append(item);
+                    YoutubeBar.items.init(item);
+                });
+            },
+            progressBar: {
+                init: function (dom) {
+                    bar = dom;
+                    this.update(0);
+                    this.delay();
+                },
+                update: function (val) {
+                    bar.width(val + '%');
+                    if (val === 100) {
+                        YoutubeBar.content.refresh(itemsActive);
+                        YoutubeBar.progressBar.clear();
+                    }
+                },
+                delay: function () {
+                    for (var i = 0; i <= 100; i++) {
+                        currentBars.push(setTimeout(this.update.bind(this.update, i), i * 30));
+                    }
+                },
+                clear: function () {
+                    $.each(currentBars, function (index, value) {
+                        clearTimeout(value);
+                    });
+                    this.update(0);
+                }
+            },
+            content: {
+                init: function (dom) {
+                    content = dom;
+                    dom.text("");
+                    itemsActive = items;
+                },
+                refresh: function (items) {
+                    content.text(items.join(','));
+                }
+            },
+            items: {
+                init: function (dom) {
+                    dom.bind('click', this.select);
+                },
+                clear: function () {
+                    $.each(itemsSelected, function (index, value) {
+                        $('#' + value).removeClass('active');
+                    });
+                },
+                select: function () {
+                    $(this).toggleClass('active');
+                    YoutubeBar.progressBar.clear();
+                    YoutubeBar.progressBar.delay();
+                    YoutubeBar.items.checkLogic($(this).attr("id"));
+                },
+                checkLogic: function (id) {
+                    $("#all").removeClass("active");
+                    var index = $.inArray(id, itemsSelected);
+                    if (index > -1) {
+                        itemsSelected.splice(index, 1);
+                    } else {
+                        itemsSelected.push(id);
+                    }
+                    itemsActive = itemsSelected;
+                    if (items.length === itemsSelected.length) {
+                        $("#all").addClass("active");
+                        this.clear();
+                        itemsSelected = [];
+                    }
+
+                }
+            }
+        };
+
+    </script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            width: 100%;
+            min-width: 400px;
+            min-height: 300px;
+            font-size: 18px;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            min-height: 50px;
+            display: flex;
+        }
+
+        nav a {
+            color: white;
+            text-align: center;
+            flex-grow: 1;
+            padding: 15px;
+        }
+
+        nav a:hover {
+            background-color: white;
+            color: black;
+        }
+
+        nav a.active {
+            background-color: darkgreen;
+            color: white;
+            text-decoration: underline;
+        }
+
+        #progress-bar {
+            height: 3px;
+            background-color: red;
+            width: 50%;
+        }
+
+        #container {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 10%;
+            width: 100%;
+        }
+
+        #container p {
+            min-height: 150px;
+            padding: 15px;
+            margin: 15%;
+            border-style: dotted;
+        }
+
+    </style>
 </head>
 <body>
 <header>
@@ -14,7 +168,6 @@
     </nav>
     <div id="progress-bar"></div>
 </header>
-
 <div id="container">
     <p>
         <span>Currently selected:</span>
@@ -22,6 +175,5 @@
         <span id="values">Values</span>
     </p>
 </div>
-
 </body>
 </html>

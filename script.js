@@ -1,7 +1,18 @@
-const items = ['Option 1', 'Option 2', 'Option 3'];
-let itemsSelected = [];
+var items = ['Opt1', 'Opt2', 'Opt3'];
+var itemsSelected = ['All'];
 
-$(document).ready(() => {
-
+$(document).ready(function () {
+        if (window.location.hash) {
+            items = window.location.hash.substring(1).split("|");
+        }
+        Bar.init(items)
     }
 );
+
+Bar = {
+    init: function (items) {
+        $.each(items, function (k, v) {
+            $('.items').append('<a id="' + v + '">' + v + '</a>');
+        });
+    }
+};

@@ -12,21 +12,21 @@
         var bar, content;
 
         $(document).ready(function () {
-                if (window.location.hash) {
-                    items = window.location.hash.substring(1).split("|");
-                    if (items.length < 3) {
-                        alert("Really ?  You need at least 3 params");
-                        items = ['Opt1', 'Opt2', 'Opt3'];
-                    }
+            if (window.location.hash) {
+                items = window.location.hash.substring(1).split("|");
+                if (items.length < 3) {
+                    alert("Really ?  You need at least 3 params");
+                    items = ['Opt1', 'Opt2', 'Opt3'];
                 }
-                YoutubeBar.init(items);
-                YoutubeBar.content.init($('#values'));
-                YoutubeBar.progressBar.init($('#progress-bar'));
             }
-        );
+            YoutubeBar.init(items);
+            YoutubeBar.content.init($('#values'));
+            YoutubeBar.progressBar.init($('#progress-bar'));
+        });
 
         YoutubeBar = {
             init: function (items) {
+                $('#all').click(YoutubeBar.defaultAction);
                 $.each(items, function (k, v) {
                     var item = $('<a id="' + v + '">' + v + '</a>');
                     $('.items').append(item);
@@ -99,6 +99,14 @@
                     }
 
                 }
+            },
+            defaultAction: function () {
+                $('#all').addClass('active');
+                YoutubeBar.items.clear();
+                YoutubeBar.progressBar.clear();
+                YoutubeBar.progressBar.delay();
+                itemsActive =  items;
+                itemsSelected = [];
             }
         };
 
